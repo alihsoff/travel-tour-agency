@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Agency</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d" rel="shortcut icon">
+
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function setId(id) {
+            document.getElementById("id").value = id;
+        }
+    </script>
+</head>
+<body>
+<div class="container" th:switch="${user}">
+    <h2 class="text-center" th:text="|${user.name}'s Profile|"></h2>
+
+    <p th:text="|Username - ${user.username}|"></p>
+    <p th:text="|Name - ${user.name}|"></p>
+    <p th:text="|Surname - ${user.surname}|"></p>
+    <p th:text="|Role - ${user.role}|"></p>
+
+    <h2 th:case="null">No tours yet!</h2>
+    <hr>
+    <div class="text-center" sec:authorize="hasRole('ADMIN')">
+        <form action="/admin/getuser" class="form-inline" method="get">
+            <div class="form-group">
+                <input id="name" name="username" placeholder="Username" type="text">
+            </div>
+            <button class="btn btn-secondary ml-2" type="submit">Search</button>
+        </form>
+    </div>
+    <hr>
+    <div th:case="*">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Tour ID</th>
+                <th>Description</th>
+                <th>Begin Date</th>
+                <th>End Date</th>
+                <th>Payment Status</th>
+                <div sec:authorize="isAuthenticated()">
+                    <th>Delete</th>
+                </div>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="userTour : ${user.userTours}">
+                <td th:text="${userTour.tour.id}"></td>
+                <td th:text="${userTour.tour.description}"></td>
+                <td th:text="${userTour.tour.beginDate}"></td>
+                <td th:text="${userTour.tour.endDate}"></td>
+                <td th:text="${userTour.paymentStatus}"></td>
+                <div sec:authorize="isAuthenticated()">
+                    <td><a class="btn btn-danger" th:href="@{/usertour/delete/{id}(id=${userTour.id})}">Delete</a></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>

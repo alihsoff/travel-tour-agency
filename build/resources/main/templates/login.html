@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row py-5">
+        <div class="col-lg-6 py-5 mx-auto">
+            <!-- Card -->
+            <div class="card bg-light">
+                <div class="row justify-content-center">
+                    <div class="col-12 pt-5">
+                        <div class="d-flex flex-column align-items-center justify-content-center">
+                            <p class="m-0" style="font-size: 30px;">Log In</p>
+                        </div>
+                        <!-- Card Body-Content -->
+                        <article class="card-body mx-auto" style="max-width: 400px;">
+                            <form action="/login" method="POST">
+                                <!-- Inputs -->
+                                <div class="input-group my-3">
+
+                                    <input name="username" class="form-control" placeholder="Email" type="text">
+                                </div>
+                                <div class="input-group mb-4">
+
+                                    <input name="password" class="form-control" placeholder="Password" type="password">
+                                </div><div class="input-group mb-4">
+
+                                <label><input name="remember-me" type="checkbox"> Remember me</label>
+                            </div>
+                                <!-- Buttons -->
+                                <div class="form-group w-100">
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            <button type="submit" class="btn-block d-inline btn bg_icon text-light">
+                                                Log In
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Option for Register -->
+                                <div class="w-100 register-option">
+                                    <p class="text-center">
+                                        Don't have an account?
+                                        <a href="/">Register</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

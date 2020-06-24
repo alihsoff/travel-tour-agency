@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Tour Page</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-6 mx-auto text-center">
+        <div class="header-title">
+            <h1>
+                Add Tour
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mx-auto">
+                <form method="post" th:action="@{/admin/tour/add}" th:object="${tour}">
+                    <div class="form-group">
+                        <input id="name" placeholder="Description" th:field="*{description}" type="text">
+                        <span th:errors="*{description}" th:if="${#fields.hasErrors('description')}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="beginDate">Begin Date:</label>
+                        <input id="beginDate" th:field="*{beginDate}" type="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date:</label>
+                        <input id="endDate" th:field="*{endDate}" type="date">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input id="price" placeholder="Price" th:field="*{price}" type="text">
+                            <span th:errors="*{price}" th:if="${#fields.hasErrors('price')}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" th:field="*{status}">
+                            <option th:text="Active" th:value="ACTIVE"></option>
+                            <option th:text="Expired" th:value="EXPIRED"></option>
+                            <option th:text="Canceled" th:value="CANCELED"></option>
+                        </select>
+                    </div>
+                    <div class="text-center" style="padding-left: 30px;">
+                        <button class="btn btn-success tx-tfm" type="submit">Add Tour</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

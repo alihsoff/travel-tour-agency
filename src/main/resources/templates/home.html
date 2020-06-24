@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Agency</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d" rel="shortcut icon">
+
+    <script crossorigin="anonymous"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function setId(id) {
+            document.getElementById("id").value = id;
+        }
+    </script>
+</head>
+<body>
+<h2 class="text-center">Tours</h2>
+<div class="container" th:switch="${tours}">
+    <div class="text-right" sec:authorize="!isAuthenticated()">
+        <a class="btn btn-primary" href="/login">Login</a>
+        <a class="btn btn-success" href="/signup">Register</a>
+    </div>
+    <div class="text-right" sec:authorize="isAuthenticated()">
+        <a class="btn btn-primary" href="/logout">Logout</a><br><br>
+        <a class="btn btn-info" href="/user/index">My Profile</a>
+    </div>
+    <h2 th:case="null">No tours yet!</h2>
+    <div th:case="*">
+        <form action="/tour/search" class="form-inline" method="get">
+            <div class="form-group">
+                <label for="beginDate"> Begin Date: </label>
+                <input class="form-control ml-2 mr-2" id="beginDate" name="beginDate" type="date">
+            </div>
+            <div class="form-group">
+                <label for="endDate"> End Date: </label>
+                <input class="form-control ml-2 mr-2" id="endDate" name="endDate" type="date">
+            </div>
+            <div class="form-group">
+                <label for="status"> Status: </label>
+                <select class="form-control ml-2 mr-2" id="status" name="status">
+                    <option value="ACTIVE">Active</option>
+                    <option value="EXPIRED">Expired</option>
+                    <option value="CANCELED">Canceled</option>
+                </select>
+            </div>
+            <button class="btn btn-secondary ml-2" type="submit">Search</button>
+        </form>
+        <hr>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Begin Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <div sec:authorize="isAuthenticated()">
+                    <th>Booking</th>
+                    <th>Buy</th>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <th>Update</th>
+                </div>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tour : ${tours}">
+                <td th:text="${tour.id}"></td>
+                <td th:text="${tour.description}"></td>
+                <td th:text="${tour.beginDate}"></td>
+                <td th:text="${tour.endDate}"></td>
+                <td th:text="${tour.status}"></td>
+                <div sec:authorize="isAuthenticated()">
+                    <td><a class="btn btn-primary" th:href="@{/usertour/book/{id}(id=${tour.id})}">Book</a></td>
+                    <td><a class="btn btn-danger" th:href="@{/usertour/buy/{id}(id=${tour.id})}">Buy</a></td>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <td><input class="btn btn-warning" data-target="#editModal" data-toggle="modal"
+                               th:onclick="'setId(\'' +${tour.id} + '\');'"
+                               type="button" value="Update Status"></td>
+                </div>
+            </tr>
+            </tbody>
+        </table>
+
+        <p sec:authorize="hasRole('ADMIN')"><a class="btn btn-success" href="/admin/tour/add">Add Tour</a></p>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="editModal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Status</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/admin/tour/update" method="POST">
+                    <div class="modal-body">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            <option th:text="Active" th:value="ACTIVE"></option>
+                            <option th:text="Expired" th:value="EXPIRED"></option>
+                            <option th:text="Canceled" th:value="CANCELED"></option>
+                        </select>
+                        <input class="form-control" id="id" name="id" type="hidden" value=""><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" name="action" type="submit" value="edit">Save changes</button>
+                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

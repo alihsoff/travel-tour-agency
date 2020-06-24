@@ -1,0 +1,7 @@
+
+S
+java:S1128"1Remove this unused import 'java.util.Collection'.(¹ÉĞšùÿÿÿÿ8úğ­.
+°
+java:S1130"’Remove the declaration of thrown exception 'org.springframework.security.core.userdetails.UsernameNotFoundException' which is a runtime exception.(ÌÃŸ8ñïĞï­.
+Z
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8úğ­.
