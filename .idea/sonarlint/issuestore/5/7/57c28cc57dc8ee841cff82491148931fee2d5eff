@@ -1,13 +1,0 @@
-
-]
-java:S46848"@Replace this persistent entity with a simple POJO or DTO object.(ı¬ûÀ8œ¶Û˜®.
-b
-java:S46842"@Replace this persistent entity with a simple POJO or DTO object.(’‹Äûÿÿÿÿ8ºúà—®.
-q
-java:S1128"ORemove this unused import 'org.springframework.web.bind.annotation.PutMapping'.(›¥÷ˆûÿÿÿÿ8ŸÁŒ®.
-T
-java:S1128"8Remove this unused import 'org.apache.tomcat.jni.Local'.(å¡.8¸‘é‡®.
-s
-java:S1128"QRemove this unused import 'org.springframework.web.bind.annotation.ResponseBody'.(•¶¶êøÿÿÿÿ8²Ÿá˜®.
-b
-java:S4684-"@Replace this persistent entity with a simple POJO or DTO object.(ä³Ğ°øÿÿÿÿ8ºúà—®.
